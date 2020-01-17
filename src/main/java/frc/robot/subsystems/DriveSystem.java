@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.CounterBase;
 import frc.robot.Constants;
@@ -39,18 +40,18 @@ public class DriveSystem extends SubsystemBase {
   /**
    * Creates a new DriveSystem.
    */
-  public DriveSystem(Joystick wheel , Joystick throttle) {
+  public DriveSystem() {
   /*  this.wheel = wheel;
     this.throttle = throttle;*/
 
-    var leftFront = new WPI_TalonSRX(1);
-		var leftBack = new WPI_TalonSRX(2);
-		var leftTop = new WPI_TalonSRX(0);
+    var leftFront = new WPI_VictorSPX(1);
+		var leftBack = new WPI_VictorSPX(4);
+		var leftTop = new WPI_VictorSPX(3);
 		leftTop.setInverted(true);
 
-  	var rightFront = new WPI_TalonSRX(4);
-		var rightBack = new WPI_TalonSRX(5);
-		var rightTop = new WPI_TalonSRX(3);
+  	var rightFront = new WPI_VictorSPX(0);
+		var rightBack = new WPI_VictorSPX(5);
+		var rightTop = new WPI_VictorSPX(2);
 		rightTop.setInverted(true);
 
 		leftDrive = new SpeedControllerGroup(leftFront, leftBack, leftTop);

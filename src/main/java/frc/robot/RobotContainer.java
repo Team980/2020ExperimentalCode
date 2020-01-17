@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.TeleopDrive;
+import frc.robot.subsystems.BaseballShooterDrive;
 import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,7 +37,7 @@ public class RobotContainer {
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   private final DriveSystem driveSystem;
-  private final TeleopDrive teleopDrive;
+  //private final TeleopDrive teleopDrive;
 
   private WPI_TalonSRX endEffectorIntakeMotor;
 
@@ -50,6 +51,8 @@ public class RobotContainer {
   private Joystick throttle;
   private Joystick wheel;
   private XboxController xBox;
+
+  //private final BaseballShooterDrive bShootDrive;
 
 
   /**
@@ -69,12 +72,14 @@ public class RobotContainer {
 		wristMotor = new WPI_TalonSRX(11);
     wristMotor.setName("wrist contreller");*/
     
-    throttle = new Joystick(0);
+    throttle = new Joystick(2);
     wheel = new Joystick(1);
-    xBox = new XboxController(2);
+    xBox = new XboxController(0);
 
-    driveSystem = new DriveSystem(wheel, throttle);
-    teleopDrive = new TeleopDrive(driveSystem);
+    driveSystem = new DriveSystem();
+    //teleopDrive = new TeleopDrive(driveSystem);
+
+    
 
     // Configure the button bindings
     configureButtonBindings();
@@ -102,7 +107,7 @@ public class RobotContainer {
 
   public Command getTeleopDriveCommand(){
     //return teleopDrive;
-    return new RunCommand(() -> driveSystem.driveRobot(applyDeadband(-throttle.getY(), Constants.MOVE_DEADBAND) , applyDeadband(wheel.getX(), Constants.TURN_DEADBAND)), driveSystem);
+    return new RunCommand(() -> driveSystem.driveRobot(applyDeadband(-xBox.getY(Hand.kLeft), Constants.MOVE_DEADBAND) , applyDeadband(xBox.getX(Hand.kRight), Constants.TURN_DEADBAND)), driveSystem);
   }
 
 	public double getLiftJoystickValue() {
