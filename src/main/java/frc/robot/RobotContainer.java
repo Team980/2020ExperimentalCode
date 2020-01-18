@@ -7,22 +7,18 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.CounterBase;
-
-import edu.wpi.first.wpilibj.Encoder;
+//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.TeleopDrive;
-import frc.robot.subsystems.BaseballShooterDrive;
 import frc.robot.subsystems.DriveSystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import frc.robot.Constants;
+/*import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj2.command.RunCommand;*/
+//import frc.robot.Constants;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -37,16 +33,7 @@ public class RobotContainer {
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   private final DriveSystem driveSystem;
-  //private final TeleopDrive teleopDrive;
-
-  private WPI_TalonSRX endEffectorIntakeMotor;
-
-  private WPI_TalonSRX liftMotor;
-	private Encoder liftEncoder;
-
-  // wrist
-  private WPI_TalonSRX wristMotor;
-  //private Potentiometer wristPotentiometer;
+  private final TeleopDrive teleopDrive;
 
   private Joystick throttle;
   private Joystick wheel;
@@ -60,24 +47,12 @@ public class RobotContainer {
    */
   public RobotContainer() {
 
-		// end effector
-		endEffectorIntakeMotor = new WPI_TalonSRX(13); 
-
-		// lift
-		liftMotor = new WPI_TalonSRX(15);
-		liftEncoder = new Encoder(0, 1, false, CounterBase.EncodingType.k4X);
-
-		// wrist
-		/*wristPotentiometer = new Potentiometer(0);
-		wristMotor = new WPI_TalonSRX(11);
-    wristMotor.setName("wrist contreller");*/
-    
     throttle = new Joystick(2);
     wheel = new Joystick(1);
     xBox = new XboxController(0);
 
     driveSystem = new DriveSystem();
-    //teleopDrive = new TeleopDrive(driveSystem);
+    teleopDrive = new TeleopDrive(driveSystem);
 
     
 
@@ -106,20 +81,10 @@ public class RobotContainer {
   }
 
   public Command getTeleopDriveCommand(){
-    //return teleopDrive;
-    return new RunCommand(() -> driveSystem.driveRobot(applyDeadband(-xBox.getY(Hand.kLeft), Constants.MOVE_DEADBAND) , applyDeadband(xBox.getX(Hand.kRight), Constants.TURN_DEADBAND)), driveSystem);
+    return teleopDrive;
+    //return new RunCommand(() -> driveSystem.driveRobot(applyDeadband(-xBox.getY(Hand.kLeft), Constants.MOVE_DEADBAND) , applyDeadband(xBox.getX(Hand.kRight), Constants.TURN_DEADBAND)), driveSystem);
   }
 
-	public double getLiftJoystickValue() {
-		double value = -xBox.getY(Hand.kRight);
-		return applyDeadband(value, Constants.LIFT_DEADBAND);
-	}
-
-	public double getWristJoystickValue() {
-		double value = -xBox.getY(Hand.kLeft);
-		return applyDeadband(value, Constants.WRIST_DEADBAND);
-  }
-  
   	/**
      * Returns 0.0 if the given value is within the specified range around zero. The remaining range
      * between the deadband and 1.0 is scaled from 0.0 to 1.0.
@@ -127,7 +92,7 @@ public class RobotContainer {
      * @param value    value to clip
      * @param deadband range around zero
      */
-  private static double applyDeadband(double value, double deadband) {
+  public double applyDeadband(double value, double deadband) {
     if (Math.abs(value) > deadband) {
       if (value > 0.0) {
         return (value - deadband) / (1.0 - deadband);

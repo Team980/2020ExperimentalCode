@@ -8,17 +8,15 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.CounterBase;
-import frc.robot.Constants;
 
 
 public class DriveSystem extends SubsystemBase {
@@ -31,19 +29,10 @@ public class DriveSystem extends SubsystemBase {
 
   private Solenoid shifter;
 
-/*  private Joystick wheel;
-  private Joystick throttle;
-
-  private double move;
-  private double turn;*/
-
   /**
    * Creates a new DriveSystem.
    */
   public DriveSystem() {
-  /*  this.wheel = wheel;
-    this.throttle = throttle;*/
-
     var leftFront = new WPI_VictorSPX(1);
 		var leftBack = new WPI_VictorSPX(4);
 		var leftTop = new WPI_VictorSPX(3);
@@ -72,9 +61,6 @@ public class DriveSystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-  /*  move = applyDeadband(-throttle.getY(), Constants.MOVE_DEADBAND);
-    turn = applyDeadband(wheel.getX(), Constants.TURN_DEADBAND);*/
-  
     // This method will be called once per scheduler run
   }
 
@@ -115,26 +101,5 @@ public class DriveSystem extends SubsystemBase {
 	public void stopMotors() {
 		differentialDrive.stopMotor(); 
 	}
-
-  	/**
-     * Returns 0.0 if the given value is within the specified range around zero. The remaining range
-     * between the deadband and 1.0 is scaled from 0.0 to 1.0.
-     *
-     * @param value    value to clip
-     * @param deadband range around zero
-     */
-    private double applyDeadband(double value, double deadband) {
-    if (Math.abs(value) > deadband) {
-      if (value > 0.0) {
-        return (value - deadband) / (1.0 - deadband);
-      } 
-      else {
-        return (value + deadband) / (1.0 - deadband);
-      }
-    } 
-    else {
-      return 0.0;
-    }
-  } 
 
 }
