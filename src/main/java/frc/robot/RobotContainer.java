@@ -11,14 +11,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.TeleopDrive;
+//import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.DriveSystem;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-/*import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj2.command.RunCommand;*/
-//import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.Constants;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -28,33 +25,32 @@ import edu.wpi.first.wpilibj2.command.RunCommand;*/
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   private final DriveSystem driveSystem;
-  private final TeleopDrive teleopDrive;
+  //private final TeleopDrive teleopDrive;
 
-  private Joystick throttle;
-  private Joystick wheel;
+  //private Joystick throttle;
+  //private Joystick wheel;
   private XboxController xBox;
-
-  //private final BaseballShooterDrive bShootDrive;
-
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
 
-    throttle = new Joystick(2);
-    wheel = new Joystick(1);
+    //throttle = new Joystick(2);
+    //wheel = new Joystick(1);
     xBox = new XboxController(0);
 
     driveSystem = new DriveSystem();
-    teleopDrive = new TeleopDrive(driveSystem);
+    //teleopDrive = new TeleopDrive(driveSystem);
 
-    
+    driveSystem.setDefaultCommand(new RunCommand(() -> 
+      driveSystem.driveRobot(applyDeadband(-xBox.getY(GenericHID.Hand.kLeft), Constants.MOVE_DEADBAND) , 
+      applyDeadband(xBox.getX(GenericHID.Hand.kRight), Constants.TURN_DEADBAND)), driveSystem));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -77,13 +73,10 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    //return m_autoCommand;
+    return null;
   }
 
-  public Command getTeleopDriveCommand(){
-    return teleopDrive;
-    //return new RunCommand(() -> driveSystem.driveRobot(applyDeadband(-xBox.getY(Hand.kLeft), Constants.MOVE_DEADBAND) , applyDeadband(xBox.getX(Hand.kRight), Constants.TURN_DEADBAND)), driveSystem);
-  }
 
   	/**
      * Returns 0.0 if the given value is within the specified range around zero. The remaining range
