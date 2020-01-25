@@ -20,4 +20,7 @@ public final class Constants {
 	public static double TURN_DEADBAND = 0.1;
 	public static double LIFT_DEADBAND = 0.1;
 	public static double WRIST_DEADBAND = 0.1;
+
+	public static final double MAX_DRIVE_SPEED_FPS = 16.0;
+
 }
