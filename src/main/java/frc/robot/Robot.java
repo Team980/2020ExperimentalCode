@@ -83,7 +83,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    teleopDrive = m_robotContainer.getTeleopDriveCommand();
+    //teleopDrive = m_robotContainer.getTeleopDriveCommand();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    teleopDrive.schedule();
+    //teleopDrive.schedule();
 
 
   }

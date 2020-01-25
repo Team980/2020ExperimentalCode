@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+//import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.CounterBase;
 
@@ -27,20 +27,20 @@ public class DriveSystem extends SubsystemBase {
   private Encoder leftDriveEncoder;
   private Encoder rightDriveEncoder;
 
-  private Solenoid shifter;
+  //private Solenoid shifter;
 
   /**
    * Creates a new DriveSystem.
    */
   public DriveSystem() {
-    var leftFront = new WPI_VictorSPX(1);
-		var leftBack = new WPI_VictorSPX(4);
-		var leftTop = new WPI_VictorSPX(3);
+    var leftFront = new WPI_TalonSRX(1);
+		var leftBack = new WPI_TalonSRX(2);
+		var leftTop = new WPI_TalonSRX(3);
 		leftTop.setInverted(true);
 
-  	var rightFront = new WPI_VictorSPX(0);
-		var rightBack = new WPI_VictorSPX(5);
-		var rightTop = new WPI_VictorSPX(2);
+  	var rightFront = new WPI_TalonSRX(4);
+		var rightBack = new WPI_TalonSRX(5);
+		var rightTop = new WPI_TalonSRX(6);
 		rightTop.setInverted(true);
 
 		leftDrive = new SpeedControllerGroup(leftFront, leftBack, leftTop);
@@ -54,7 +54,7 @@ public class DriveSystem extends SubsystemBase {
 		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
 		rightDriveEncoder.setDistancePerPulse(Math.PI * 2 * (2.0 / 12) / 2048.0);
 
-		shifter = new Solenoid(0); 
+		//shifter = new Solenoid(0); 
 
     differentialDrive = new DifferentialDrive(leftDrive, rightDrive);
   }
@@ -89,14 +89,14 @@ public class DriveSystem extends SubsystemBase {
 		return rightDriveEncoder.getRate();
 	}
 
-	public boolean isLowGear() {
+	/*public boolean isLowGear() {
     return shifter.get();
 
 	}//end getGear	
 
 	public void setGear(boolean gear) {//false = high gear, true = low gear
 		shifter.set(gear);
-	}
+	}*/
 
 	public void stopMotors() {
 		differentialDrive.stopMotor(); 
