@@ -24,20 +24,22 @@ public class PIDDriveSide implements SpeedController {
     private double setPoint;
     private boolean inverted;
 
+
     public PIDDriveSide(SpeedController motor, Encoder encoder) {
         this.motor = motor;
         this.encoder = encoder;
         this.setPoint = 0;
         this.inverted = false;
 
-        controller = new PIDController(0.05, 0, 0);
+        controller = new PIDController(1, 0, 0);
     }
 
     public void set(double speed) {
         setPoint = speed * (inverted? -1 : 1);
-        double output = controller.calculate(encoder.getRate(), setPoint*MAX_DRIVE_SPEED_FPS);
+        controller.setSetpoint(setPoint);
+        double output = controller.calculate(encoder.getRate()/MAX_DRIVE_SPEED_FPS);
         motor.set(output);
-        System.out.println(output);
+        //System.out.println(setPoint);
     }
 
     public double get() {
