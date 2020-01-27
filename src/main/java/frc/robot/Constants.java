@@ -22,5 +22,11 @@ public final class Constants {
 	public static double WRIST_DEADBAND = 0.1;
 
 	public static final double MAX_DRIVE_SPEED_FPS = 16.0;
+	public static double MAX_DRIVE_SPEED_MPS = MAX_DRIVE_SPEED_FPS * .3048;
+	public static double MAX_ANGULAR_SPEED = 2 * Math.PI; // one rotation per second
+
+	public static double WHEEL_RADIUS = 2.0 / 12; //in feet
+	public static double WHEEL_RADIUS_METRIC  = 2 * .0254;// in meters
+	public static double FEED_FOWARD_GAIN = 1 / MAX_DRIVE_SPEED_MPS;
 
 }
