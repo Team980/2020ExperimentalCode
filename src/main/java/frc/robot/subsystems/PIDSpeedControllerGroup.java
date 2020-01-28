@@ -114,9 +114,10 @@ public class PIDSpeedControllerGroup extends PIDSubsystem implements SpeedContro
 
   @Override
   public void stopMotor() {
-    for (SpeedController speedController : m_speedControllers) {
+    setSetpoint(0);
+  /*  for (SpeedController speedController : m_speedControllers) {
       speedController.stopMotor();
-    }
+    }*/
   }
 
   @Override

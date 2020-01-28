@@ -19,7 +19,7 @@ public final class Constants {
     public static double MOVE_DEADBAND = 0.1;
 	public static double TURN_DEADBAND = 0.1;
 	public static double LIFT_DEADBAND = 0.1;
-	public static double WRIST_DEADBAND = 0.1;
+	public static double SPINNER_DEADBAND = 0.1;
 
 	public static final double MAX_DRIVE_SPEED_FPS = 16.0;
 	public static double MAX_DRIVE_SPEED_MPS = MAX_DRIVE_SPEED_FPS * .3048;

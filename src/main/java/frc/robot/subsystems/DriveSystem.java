@@ -8,10 +8,11 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Solenoid;
+//import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -41,7 +42,7 @@ public class DriveSystem extends SubsystemBase {
 		leftDriveEncoder = new Encoder(0, 1, false, CounterBase.EncodingType.k4X);
 		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
 		leftDriveEncoder.setDistancePerPulse(Math.PI * 2 * (2.0 / 12) / 2048.0);
-		leftDriveEncoder.setName("left drive encoder");
+		//leftDriveEncoder.setName("left drive encoder");
 
 		var rightFront = new WPI_TalonSRX(4);
 		var rightBack = new WPI_TalonSRX(5);
@@ -50,7 +51,7 @@ public class DriveSystem extends SubsystemBase {
 		rightDriveEncoder = new Encoder(2, 3, true, CounterBase.EncodingType.k4X);
 		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
 		rightDriveEncoder.setDistancePerPulse(Math.PI * 2 * (2.0 / 12) / 2048.0);
-		rightDriveEncoder.setName("right drive encoder");
+		//rightDriveEncoder.setName("right drive encoder");
 
 		leftDrive = new PIDDriveSide(new SpeedControllerGroup(leftFront, leftBack, leftTop), leftDriveEncoder);
 		rightDrive = new PIDDriveSide(new SpeedControllerGroup(rightFront, rightBack, rightTop), rightDriveEncoder);
@@ -62,6 +63,10 @@ public class DriveSystem extends SubsystemBase {
 
 	@Override
 	public void periodic() {
+		SmartDashboard.putNumber("Left Encoder Velocity", leftDriveEncoder.getRate());
+		SmartDashboard.putNumber("Right Encoder Velocity", rightDriveEncoder.getRate());
+		SmartDashboard.putNumber("Left Encoder Distance", leftDriveEncoder.getDistance());
+		SmartDashboard.putNumber("Right Encoder Distance", rightDriveEncoder.getDistance());
 		// This method will be called once per scheduler run
 	}
 

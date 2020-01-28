@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -46,14 +47,18 @@ public class DriveSystemPIDver3 extends SubsystemBase {
 		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
     rightEncoder.setDistancePerPulse(Math.PI * 2 * (Constants.WHEEL_RADIUS) / 2048.0);
     rightDrive = new PIDSpeedControllerGroup(rightEncoder , rightFront , rightBack , rightTop);
-
+    leftDrive.enable();
+    rightDrive.enable();
     robotPIDDrive = new DifferentialDrive(leftDrive, rightDrive);
-
-
+  
   }
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Left Drive Velocity", leftEncoder.getRate());
+    SmartDashboard.putNumber("Right Drive Velocity", rightEncoder.getRate());
+    SmartDashboard.putNumber("Left Drive Distance", leftEncoder.getDistance());
+    SmartDashboard.putNumber("Right Drive Distance", rightEncoder.getDistance());
     // This method will be called once per scheduler run
   }
 

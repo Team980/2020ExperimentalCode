@@ -8,8 +8,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
+//import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import frc.robot.subsystems.ControlPanelWheel;
 //import frc.robot.subsystems.DriveSystem;
 //import frc.robot.subsystems.DriveSystemPIDver2;
 import frc.robot.subsystems.DriveSystemPIDver3;
@@ -33,7 +35,7 @@ public class RobotContainer {
   //private final DriveSystemPIDver2 driveSystem;
   private final DriveSystemPIDver3 driveSystem3;
 
-
+  private ControlPanelWheel cpWheel;
   //private Joystick throttle;
   //private Joystick wheel;
   private XboxController xBox;
@@ -56,6 +58,17 @@ public class RobotContainer {
     driveSystem3 = new DriveSystemPIDver3();
     driveSystem3.setDefaultCommand(new RunCommand(() -> 
       driveSystem3.driveRobot(-xBox.getY(GenericHID.Hand.kLeft) , xBox.getX(GenericHID.Hand.kRight)), driveSystem3));
+
+    cpWheel = new ControlPanelWheel();
+    cpWheel.setDefaultCommand(new RunCommand(() -> {
+      if (xBox.getTriggerAxis(Hand.kLeft) > 0){
+        cpWheel.spinWheel(applyDeadband(-xBox.getTriggerAxis(Hand.kLeft), Constants.SPINNER_DEADBAND));
+      }
+      else{
+        cpWheel.spinWheel(applyDeadband(xBox.getTriggerAxis(Hand.kRight), Constants.SPINNER_DEADBAND));
+      }
+    } , cpWheel));
+      
 
 
     // Configure the button bindings
