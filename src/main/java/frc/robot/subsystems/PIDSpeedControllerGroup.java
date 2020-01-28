@@ -60,7 +60,10 @@ public class PIDSpeedControllerGroup extends PIDSubsystem implements SpeedContro
   @Override
   public void useOutput(double output, double setpoint) {
     // Use the output here
-    set(output + ff.calculate(setpoint));
+    //switched set to setvoltage, changed speed to the pid output, added possible feed forward, and moved this from the set method
+    for (SpeedController speedController : m_speedControllers) {
+      speedController.setVoltage(m_isInverted ? -(output + ff.calculate(setpoint)) : (output + ff.calculate(setpoint)));
+    }
   }
 
   @Override
@@ -74,12 +77,14 @@ public class PIDSpeedControllerGroup extends PIDSubsystem implements SpeedContro
   public void close() {
     SendableRegistry.remove(this);
   }
-//TODO fix this put it in the pid method and switch this to do setsetpoint
   @Override
   public void set(double speed) {
-    for (SpeedController speedController : m_speedControllers) {
-      speedController.setVoltage(m_isInverted ? -speed : speed);//the only change, switched set to setvoltage
-    }
+    setSetpoint(speed * Constants.MAX_DRIVE_SPEED_FPS);// in place of below, made this call setsetpoint.  theoretically will take arcade drive inputs and run them through PID
+
+
+    /*for (SpeedController speedController : m_speedControllers) {
+      speedController.set(m_isInverted ? -speed : speed);
+    }*/
   }
 
   @Override

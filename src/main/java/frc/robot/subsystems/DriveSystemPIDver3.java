@@ -10,8 +10,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -58,4 +56,34 @@ public class DriveSystemPIDver3 extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+  public void driveRobot(double move, double turn) {
+		robotPIDDrive.arcadeDrive(move, turn);
+	}
+
+	public double getLeftDistance() {
+		return leftEncoder.getDistance();
+	}
+
+	public double getRightDistance() {
+		return rightEncoder.getDistance();
+	}
+
+	public void resetEncoderDistance() {
+		leftEncoder.reset();
+		rightEncoder.reset();
+	}
+
+	public double getLeftSpeed() {
+		return leftEncoder.getRate();
+	}
+
+	public double getRightSpeed() {
+		return rightEncoder.getRate();
+	}
+
+	public void stopMotors() {
+		robotPIDDrive.stopMotor(); 
+	}
+
 }

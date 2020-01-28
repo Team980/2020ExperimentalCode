@@ -7,12 +7,12 @@
 
 package frc.robot;
 
-//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-//import frc.robot.commands.TeleopDrive;
-import frc.robot.subsystems.DriveSystem;
+//import frc.robot.subsystems.DriveSystem;
+//import frc.robot.subsystems.DriveSystemPIDver2;
+import frc.robot.subsystems.DriveSystemPIDver3;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants;
@@ -29,8 +29,10 @@ public class RobotContainer {
 
   //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  private final DriveSystem driveSystem;
-  //private final TeleopDrive teleopDrive;
+  //private final DriveSystem driveSystem;
+  //private final DriveSystemPIDver2 driveSystem;
+  private final DriveSystemPIDver3 driveSystem3;
+
 
   //private Joystick throttle;
   //private Joystick wheel;
@@ -45,12 +47,16 @@ public class RobotContainer {
     //wheel = new Joystick(1);
     xBox = new XboxController(0);
 
-    driveSystem = new DriveSystem();
-    //teleopDrive = new TeleopDrive(driveSystem);
+/*    driveSystem = new DriveSystem();
 
     driveSystem.setDefaultCommand(new RunCommand(() -> 
       driveSystem.driveRobot(applyDeadband(-xBox.getY(GenericHID.Hand.kLeft), Constants.MOVE_DEADBAND) , 
-      applyDeadband(xBox.getX(GenericHID.Hand.kRight), Constants.TURN_DEADBAND)), driveSystem));
+      applyDeadband(xBox.getX(GenericHID.Hand.kRight), Constants.TURN_DEADBAND)), driveSystem));*/
+
+    driveSystem3 = new DriveSystemPIDver3();
+    driveSystem3.setDefaultCommand(new RunCommand(() -> 
+      driveSystem3.driveRobot(-xBox.getY(GenericHID.Hand.kLeft) , xBox.getX(GenericHID.Hand.kRight)), driveSystem3));
+
 
     // Configure the button bindings
     configureButtonBindings();
