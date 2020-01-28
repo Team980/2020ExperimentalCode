@@ -7,27 +7,21 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.PIDSpeedControllerGroup;
+import frc.robot.Constants;
 
 public class DriveSystemPIDver3 extends SubsystemBase {
-  private double Kp = 1;
-  private double Ki = 0;
-  private double Kd = 0;
-  private SimpleMotorFeedforward ff;
-
   private PIDSpeedControllerGroup leftDrive;
   private PIDSpeedControllerGroup rightDrive;
 
   private Encoder leftEncoder;
   private Encoder rightEncoder;
-
-  private PIDController leftController;
-  private PIDController rightController;
 
   private DifferentialDrive robotPIDDrive;
 
@@ -37,6 +31,26 @@ public class DriveSystemPIDver3 extends SubsystemBase {
    * Creates a new DriveSystemPIDver3.
    */
   public DriveSystemPIDver3() {
+    var leftFront = new WPI_TalonSRX(1);
+		var leftBack = new WPI_TalonSRX(2);
+		var leftTop = new WPI_TalonSRX(3);
+    leftTop.setInverted(true);
+		leftEncoder = new Encoder(0, 1);
+		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
+		leftEncoder.setDistancePerPulse(Math.PI * 2 * (Constants.WHEEL_RADIUS) / 2048.0);
+    leftDrive = new PIDSpeedControllerGroup(leftEncoder , leftFront , leftBack , leftTop);
+
+		var rightFront = new WPI_TalonSRX(4);
+		var rightBack = new WPI_TalonSRX(5);
+		var rightTop = new WPI_TalonSRX(6);
+    rightTop.setInverted(true);
+		rightEncoder = new Encoder(2, 3);
+		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
+    rightEncoder.setDistancePerPulse(Math.PI * 2 * (Constants.WHEEL_RADIUS) / 2048.0);
+    rightDrive = new PIDSpeedControllerGroup(rightEncoder , rightFront , rightBack , rightTop);
+
+    robotPIDDrive = new DifferentialDrive(leftDrive, rightDrive);
+
 
   }
 

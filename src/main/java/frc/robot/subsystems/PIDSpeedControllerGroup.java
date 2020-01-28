@@ -1,21 +1,26 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2016-2019 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot;
+package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import frc.robot.Constants;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SendableRegistry;
 
-/**
- * Allows multiple {@link SpeedController} objects to be linked together.
- */
-public class PIDSpeedControllerGroup implements SpeedController, Sendable, AutoCloseable {
+public class PIDSpeedControllerGroup extends PIDSubsystem implements SpeedController, Sendable, AutoCloseable {
+  private SimpleMotorFeedforward ff;
+  private Encoder encoder;
+
   private boolean m_isInverted;
   private SpeedController[] m_speedControllers;
   private static int instances;
@@ -26,7 +31,20 @@ public class PIDSpeedControllerGroup implements SpeedController, Sendable, AutoC
    * @param speedControllers The SpeedControllers to add
    */
   @SuppressWarnings("PMD.AvoidArrayLoops")
-  public PIDSpeedControllerGroup(SpeedController speedController, SpeedController... speedControllers) {
+
+  /**
+   * Creates a new PIDSpeedControllerGroup.
+   */
+  public PIDSpeedControllerGroup(Encoder encoder , SpeedController speedController, SpeedController... speedControllers) {
+    super(
+        // The PIDController used by the subsystem
+        new PIDController(Constants.Kp, Constants.Ki, Constants.Kd));
+
+        ff = new SimpleMotorFeedforward( 1 , Constants.FEED_FOWARD_GAIN);
+
+    this.encoder = encoder;
+
+    
     m_speedControllers = new SpeedController[speedControllers.length + 1];
     m_speedControllers[0] = speedController;
     SendableRegistry.addChild(this, speedController);
@@ -36,13 +54,27 @@ public class PIDSpeedControllerGroup implements SpeedController, Sendable, AutoC
     }
     instances++;
     SendableRegistry.addLW(this, "tSpeedControllerGroup", instances);
+
+  }
+//PID subsystem methods
+  @Override
+  public void useOutput(double output, double setpoint) {
+    // Use the output here
+    set(output + ff.calculate(setpoint));
   }
 
+  @Override
+  public double getMeasurement() {
+    // Return the process variable measurement here
+    return encoder.getRate();
+  }
+
+//SpeedControllerGroup methods
   @Override
   public void close() {
     SendableRegistry.remove(this);
   }
-
+//TODO fix this put it in the pid method and switch this to do setsetpoint
   @Override
   public void set(double speed) {
     for (SpeedController speedController : m_speedControllers) {
@@ -94,4 +126,5 @@ public class PIDSpeedControllerGroup implements SpeedController, Sendable, AutoC
     builder.setSafeState(this::stopMotor);
     builder.addDoubleProperty("Value", this::get, this::set);
   }
+
 }

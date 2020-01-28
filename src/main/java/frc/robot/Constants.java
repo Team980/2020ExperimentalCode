@@ -29,4 +29,9 @@ public final class Constants {
 	public static double WHEEL_RADIUS_METRIC  = 2 * .0254;// in meters
 	public static double FEED_FOWARD_GAIN = 1 / MAX_DRIVE_SPEED_MPS;
 
+	public static  double Kp = 1;
+	public static  double Ki = 0;
+	public static  double Kd = 0;
+  
+
 }
