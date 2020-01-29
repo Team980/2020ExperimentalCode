@@ -48,7 +48,7 @@ public class DriveSystem extends SubsystemBase {
 		var rightBack = new WPI_TalonSRX(5);
 		var rightTop = new WPI_TalonSRX(6);
 		rightTop.setInverted(true);
-		rightDriveEncoder = new Encoder(2, 3, true, CounterBase.EncodingType.k4X);
+		rightDriveEncoder = new Encoder(2, 3, false, CounterBase.EncodingType.k4X);
 		//(Channel A port, Channel B port, is it inverted true/false, encoder type)
 		rightDriveEncoder.setDistancePerPulse(Math.PI * 2 * (2.0 / 12) / 2048.0);
 		//rightDriveEncoder.setName("right drive encoder");

@@ -40,7 +40,7 @@ public class PIDSpeedControllerGroup extends PIDSubsystem implements SpeedContro
         // The PIDController used by the subsystem
         new PIDController(Constants.Kp, Constants.Ki, Constants.Kd));
 
-        ff = new SimpleMotorFeedforward( 1 , Constants.FEED_FOWARD_GAIN);
+        ff = new SimpleMotorFeedforward(0, Constants.FEED_FOWARD_GAIN);
 
     this.encoder = encoder;
 
@@ -63,6 +63,9 @@ public class PIDSpeedControllerGroup extends PIDSubsystem implements SpeedContro
     //switched set to setvoltage, changed speed to the pid output, added possible feed forward, and moved this from the set method
     for (SpeedController speedController : m_speedControllers) {
       speedController.setVoltage(m_isInverted ? -(output + ff.calculate(setpoint)) : (output + ff.calculate(setpoint)));
+    
+      //speedController.setVoltage(m_isInverted ? -output : output);
+
     }
   }
 

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.subsystems.ControlPanelWheel;
+import frc.robot.subsystems.DriveSystem;
 //import frc.robot.subsystems.DriveSystem;
 //import frc.robot.subsystems.DriveSystemPIDver2;
 import frc.robot.subsystems.DriveSystemPIDver3;
@@ -49,25 +50,25 @@ public class RobotContainer {
     //wheel = new Joystick(1);
     xBox = new XboxController(0);
 
-/*    driveSystem = new DriveSystem();
+    // driveSystem = new DriveSystem();
 
-    driveSystem.setDefaultCommand(new RunCommand(() -> 
-      driveSystem.driveRobot(applyDeadband(-xBox.getY(GenericHID.Hand.kLeft), Constants.MOVE_DEADBAND) , 
-      applyDeadband(xBox.getX(GenericHID.Hand.kRight), Constants.TURN_DEADBAND)), driveSystem));*/
+    // driveSystem.setDefaultCommand(new RunCommand(() -> 
+    //   driveSystem.driveRobot(applyDeadband(-xBox.getY(GenericHID.Hand.kLeft), Constants.MOVE_DEADBAND) , 
+    //   applyDeadband(xBox.getX(GenericHID.Hand.kRight), Constants.TURN_DEADBAND)), driveSystem));
 
     driveSystem3 = new DriveSystemPIDver3();
     driveSystem3.setDefaultCommand(new RunCommand(() -> 
       driveSystem3.driveRobot(-xBox.getY(GenericHID.Hand.kLeft) , xBox.getX(GenericHID.Hand.kRight)), driveSystem3));
 
-    cpWheel = new ControlPanelWheel();
-    cpWheel.setDefaultCommand(new RunCommand(() -> {
-      if (xBox.getTriggerAxis(Hand.kLeft) > 0){
-        cpWheel.spinWheel(applyDeadband(-xBox.getTriggerAxis(Hand.kLeft), Constants.SPINNER_DEADBAND));
-      }
-      else{
-        cpWheel.spinWheel(applyDeadband(xBox.getTriggerAxis(Hand.kRight), Constants.SPINNER_DEADBAND));
-      }
-    } , cpWheel));
+    // cpWheel = new ControlPanelWheel();
+    // cpWheel.setDefaultCommand(new RunCommand(() -> {
+    //   if (xBox.getTriggerAxis(Hand.kLeft) > 0){
+    //     cpWheel.spinWheel(applyDeadband(-xBox.getTriggerAxis(Hand.kLeft), Constants.SPINNER_DEADBAND));
+    //   }
+    //   else{
+    //     cpWheel.spinWheel(applyDeadband(xBox.getTriggerAxis(Hand.kRight), Constants.SPINNER_DEADBAND));
+    //   }
+    // } , cpWheel));
       
 
 

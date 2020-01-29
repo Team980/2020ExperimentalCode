@@ -18,8 +18,7 @@ public class TalonBasedCodeDrive extends SubsystemBase {
 
   private WPI_TalonSRX rightFront = new WPI_TalonSRX(4);
   private WPI_TalonSRX rightBack = new WPI_TalonSRX(5);
-  private WPI_TalonSRX
-   rightTop = new WPI_TalonSRX(6);
+  private WPI_TalonSRX rightTop = new WPI_TalonSRX(6);
 
 
   /**

@@ -27,11 +27,11 @@ public final class Constants {
 
 	public static double WHEEL_RADIUS = 2.0 / 12; //in feet
 	public static double WHEEL_RADIUS_METRIC  = 2 * .0254;// in meters
-	public static double FEED_FOWARD_GAIN = 1 / MAX_DRIVE_SPEED_MPS;
+	public static double FEED_FOWARD_GAIN = 1;
 
-	public static  double Kp = 1;
+	public static  double Kp = .5;
 	public static  double Ki = 0;
 	public static  double Kd = 0;
   
-
+	public static final double FEED_FORWARD_MULTIPLIER = 1;
 }
