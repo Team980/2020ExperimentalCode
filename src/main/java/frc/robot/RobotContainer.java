@@ -32,9 +32,9 @@ public class RobotContainer {
 
   //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  //private final DriveSystem driveSystem;
+  private final DriveSystem driveSystem;
   //private final DriveSystemPIDver2 driveSystem;
-  private final DriveSystemPIDver3 driveSystem3;
+  // private final DriveSystemPIDver3 driveSystem3;
 
   private ControlPanelWheel cpWheel;
   //private Joystick throttle;
@@ -50,15 +50,15 @@ public class RobotContainer {
     //wheel = new Joystick(1);
     xBox = new XboxController(0);
 
-    // driveSystem = new DriveSystem();
+    driveSystem = new DriveSystem();
 
-    // driveSystem.setDefaultCommand(new RunCommand(() -> 
-    //   driveSystem.driveRobot(applyDeadband(-xBox.getY(GenericHID.Hand.kLeft), Constants.MOVE_DEADBAND) , 
-    //   applyDeadband(xBox.getX(GenericHID.Hand.kRight), Constants.TURN_DEADBAND)), driveSystem));
+    driveSystem.setDefaultCommand(new RunCommand(() -> 
+      driveSystem.driveRobot(applyDeadband(-xBox.getY(GenericHID.Hand.kLeft), Constants.MOVE_DEADBAND) , 
+      applyDeadband(xBox.getX(GenericHID.Hand.kRight), Constants.TURN_DEADBAND)), driveSystem));
 
-    driveSystem3 = new DriveSystemPIDver3();
-    driveSystem3.setDefaultCommand(new RunCommand(() -> 
-      driveSystem3.driveRobot(-xBox.getY(GenericHID.Hand.kLeft) , xBox.getX(GenericHID.Hand.kRight)), driveSystem3));
+    // driveSystem3 = new DriveSystemPIDver3();
+    // driveSystem3.setDefaultCommand(new RunCommand(() -> 
+    //   driveSystem3.driveRobot(-xBox.getY(GenericHID.Hand.kLeft) , xBox.getX(GenericHID.Hand.kRight)), driveSystem3));
 
     // cpWheel = new ControlPanelWheel();
     // cpWheel.setDefaultCommand(new RunCommand(() -> {

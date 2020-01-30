@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.PIDController;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -20,6 +22,11 @@ public final class Constants {
 	public static double TURN_DEADBAND = 0.1;
 	public static double LIFT_DEADBAND = 0.1;
 	public static double SPINNER_DEADBAND = 0.1;
+
+	public static final double PID_DRIVE_P = 1.0;
+	public static final double PID_DRIVE_I = 0.0;
+	public static final double PID_DRIVE_D = 0.0;
+	public static final double PID_DRIVE_F = 1.0;
 
 	public static final double MAX_DRIVE_SPEED_FPS = 16.0;
 	public static double MAX_DRIVE_SPEED_MPS = MAX_DRIVE_SPEED_FPS * .3048;

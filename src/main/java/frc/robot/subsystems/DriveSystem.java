@@ -53,8 +53,8 @@ public class DriveSystem extends SubsystemBase {
 		rightDriveEncoder.setDistancePerPulse(Math.PI * 2 * (2.0 / 12) / 2048.0);
 		//rightDriveEncoder.setName("right drive encoder");
 
-		leftDrive = new PIDDriveSide(new SpeedControllerGroup(leftFront, leftBack, leftTop), leftDriveEncoder);
-		rightDrive = new PIDDriveSide(new SpeedControllerGroup(rightFront, rightBack, rightTop), rightDriveEncoder);
+		leftDrive = new SpeedControllerPIDWrapper(new SpeedControllerGroup(leftFront, leftBack, leftTop), leftDriveEncoder);
+		rightDrive = new SpeedControllerPIDWrapper(new SpeedControllerGroup(rightFront, rightBack, rightTop), rightDriveEncoder);
 		// leftDrive = new SpeedControllerGroup(leftFront, leftBack, leftTop);
 		// rightDrive = new SpeedControllerGroup(rightFront, rightBack, rightTop);
 
